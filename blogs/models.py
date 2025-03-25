@@ -11,7 +11,7 @@ class PublishedManager(models.Manager):
 
 class PostCategory(models.Model):
 	name = models.CharField(max_length=100)
-	description = models.TextField()
+	description = models.TextField(null=True ,blank=True)
 
 
 class Post(models.Model):
@@ -23,11 +23,11 @@ class Post(models.Model):
 	author = models.ForeignKey(User, on_delete=models.CASCADE)
 	category = models.ForeignKey(PostCategory, on_delete=models.CASCADE)
 
-	title = models.CharField(max_length=300)
+	title = models.CharField(max_length=300,)
 	body = models.TextField()
 
 	published_at = models.DateTimeField(default=timezone.now)
-	created_at = models.DateTimeField(auto_now_add=True)
+	created_at = models.DateTimeField(auto_now_add=True )
 	updated_at = models.DateTimeField(auto_now=True)
 
 	status = models.CharField(max_length=10, choices=STATUS, default='DF')
@@ -36,9 +36,9 @@ class Post(models.Model):
 	published = PublishedManager()
 
 	class Meta:
-		ordering = ('-publish',)
+		ordering = ('-published_at',)
 		indexes = [
-			models.Index(fields=['-publish']),
+			models.Index(fields=['-published_at']),
 		]
 
 	def __str__(self):

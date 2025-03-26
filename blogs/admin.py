@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from blogs.models import Comment, Post, PostCategory
+from blogs.models import Comment, Post, PostCategory, PostImage
 
-# Register your models here.
-admin.site.register([Comment, Post, PostCategory])
+
+admin.site.register([Comment, Post, PostCategory, PostImage])
+

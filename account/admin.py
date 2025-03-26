@@ -24,6 +24,7 @@ class ProfileAdmin(admin.ModelAdmin):
     user_is_superuser.boolean = True
 
 admin.site.register(Profile, ProfileAdmin)
-admin.site.register(Health)
-admin.site.register(DocumentCategory)
 admin.site.register(Document)
+admin.site.register(DocumentCategory)
+admin.site.register(Health)
+

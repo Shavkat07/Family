@@ -51,7 +51,7 @@ class Post(models.Model):
 	def __str__(self):
 		return self.title
 
-class PostImage(models.Model):
+class PostImage(models.Model):  
 	post = models.ForeignKey(Post, on_delete=models.CASCADE)
 	image = models.ImageField(upload_to='media/images/post_images/')
 	caption = models.CharField(max_length=255, blank=True, null=True)

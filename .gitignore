@@ -6,6 +6,10 @@ __pycache__/
 # C extensions
 *.so
 
+account/migrations
+blogs/migrations
+custom_auth/migrations
+
 # Distribution / packaging
 .Python
 build/
@@ -177,3 +181,4 @@ cython_debug/
 /.idea/inspectionProfiles/profiles_settings.xml
 /.idea/inspectionProfiles/Project_Default.xml
 /.idea/vcs.xml
+/blogs/migrations/

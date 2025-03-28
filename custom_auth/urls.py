@@ -7,26 +7,25 @@ from .views import (
 	UserViewSet, SetNewPasswordView, ChangePasswordView, ResetPasswordView
 )
 
-
 router = DefaultRouter()
 router.register('users', UserViewSet, basename='users')
 
 urlpatterns = [
-	# Аутентификация
-	path('register/', RegisterView.as_view(), name='register'),
-	path('login/', CustomTokenObtainPairView.as_view(), name='login'),
-	path('logout/', LogoutView.as_view(), name='logout'),
+	              # Аутентификация
+	              path('register/', RegisterView.as_view(), name='register'),
+	              path('login/', CustomTokenObtainPairView.as_view(), name='login'),
+	              path('logout/', LogoutView.as_view(), name='logout'),
 
-	# Токены
-	path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+	              # Токены
+	              path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
-	# Профиль пользователя
-	path('profile/', ProfileUserView.as_view(), name='profile'),
+	              # Профиль пользователя
+	              path('profile/', ProfileUserView.as_view(), name='profile'),
 
-	# Смена пароля
-	path('set-new-password/', SetNewPasswordView.as_view(), name='set-new-password'),
-	path('change-password/', ChangePasswordView.as_view(), name='change-password'),
+	              # Смена пароля
+	              path('set-new-password/', SetNewPasswordView.as_view(), name='set-new-password'),
+	              path('change-password/', ChangePasswordView.as_view(), name='change-password'),
 
-	# Восстановление пароля
-	path('reset-password/', ResetPasswordView.as_view(), name='reset-password'),
-] + router.urls
+	              # Восстановление пароля
+	              path('reset-password/', ResetPasswordView.as_view(), name='reset-password'),
+              ] + router.urls

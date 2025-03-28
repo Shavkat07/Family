@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 from .models import Post, PostImage, PostCategory, Comment
 
 
@@ -14,6 +15,8 @@ class PostImageSerializer(serializers.ModelSerializer):
 		fields = '__all__'
 
 
+
+
 class PostCategorySerializer(serializers.ModelSerializer):
 	class Meta:
 		model = PostCategory
@@ -24,5 +27,3 @@ class CommentSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Comment
 		fields = '__all__'
-
-

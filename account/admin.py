@@ -11,7 +11,7 @@ class ProfileAdmin(admin.ModelAdmin):
     )
 
     def user_username(self, obj):
-        return obj.user.username
+        return obj.user.email
     user_username.short_description = 'Username'
 
     def user_first_name(self, obj):

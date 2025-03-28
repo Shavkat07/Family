@@ -8,6 +8,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 		model = Profile
 		fields = '__all__'  # Можно указать конкретные поля, если не нужны все
 
+
 class HealthSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Health
@@ -19,8 +20,8 @@ class DocumentSerializer(serializers.ModelSerializer):
 		model = Document
 		fields = '__all__'
 
+
 class DocumentCategorySerializer(serializers.ModelSerializer):
 	class Meta:
 		model = DocumentCategory
 		fields = '__all__'
-

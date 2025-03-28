@@ -1,12 +1,13 @@
 from rest_framework import generics, status
+from rest_framework import viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
+
 from .models import User
 from .serializers import RegisterSerializer, CustomTokenObtainPairSerializer, CustomUserSerializer, \
 	SetNewPasswordSerializer, ChangePasswordSerializer, ResetPasswordSerializer, LogoutSerializer
-from rest_framework import viewsets
 
 
 class RegisterView(generics.CreateAPIView):
@@ -27,6 +28,7 @@ class CustomTokenObtainPairView(generics.GenericAPIView):
 
 class LogoutView(APIView):
 	permission_classes = [IsAuthenticated]
+	serializer_class = LogoutSerializer  # <- Добавляем!
 
 	def post(self, request):
 		serializer = LogoutSerializer(data=request.data)
@@ -38,7 +40,7 @@ class LogoutView(APIView):
 			token.blacklist()  # Добавляем токен в черный список
 			return Response({"detail": "Successfully logged out."}, status=status.HTTP_200_OK)
 		except Exception as e:
-			return Response({"error": "Invalid token"}, status=status.HTTP_400_BAD_REQUEST)
+			return Response({"error": f"Error: {e}"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ProfileUserView(generics.RetrieveAPIView):
@@ -60,6 +62,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class SetNewPasswordView(APIView):
 	permission_classes = [IsAuthenticated]
+	serializer_class = SetNewPasswordSerializer
 
 	def post(self, request):
 		serializer = SetNewPasswordSerializer(data=request.data)
@@ -71,6 +74,7 @@ class SetNewPasswordView(APIView):
 
 class ChangePasswordView(APIView):
 	permission_classes = [IsAuthenticated]  # Требует авторизации
+	serializer_class = ChangePasswordSerializer
 
 	def post(self, request):
 		serializer = ChangePasswordSerializer(data=request.data, context={'request': request})
@@ -82,6 +86,8 @@ class ChangePasswordView(APIView):
 
 
 class ResetPasswordView(APIView):
+	serializer_class = ResetPasswordSerializer
+
 	def post(self, request):
 		serializer = ResetPasswordSerializer(data=request.data)
 		if serializer.is_valid():

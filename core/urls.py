@@ -18,13 +18,23 @@ from django.conf import settings
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.urls import path, include
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include('blogs.urls')),
+    path("admin/", admin.site.urls),
+    path("api/v1/auth/", include("custom_auth.urls")),  # Аутентификация
+    path("api/v1/account/", include("account.urls")),   # Профиль, документы, здоровье
+    path("api/v1/blogs/", include("blogs.urls")),       # Блог
 
-    # path('api-auth/', include('rest_framework.urls')),
-    path('auth/', include('custom_auth.urls')),
+    # Swagger JSON
+    path('api/v1/schema/', SpectacularAPIView.as_view(), name='schema'),
+
+    # Swagger UI
+    path('api/v1/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+
+    # Redoc
+    path('api/v1/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]
 
 if settings.DEBUG:

@@ -12,6 +12,7 @@ class PublishedManager(models.Manager):
 
 
 class PostCategory(models.Model):
+	parent_category = models.ForeignKey("PostCategory", related_name="child_categories", on_delete=models.CASCADE, blank=True, null=True)
 	name = models.CharField(max_length=100)
 	description = models.TextField(null=True ,blank=True)
 
@@ -53,7 +54,7 @@ class Post(models.Model):
 
 class PostImage(models.Model):  
 	post = models.ForeignKey(Post, on_delete=models.CASCADE)
-	image = models.ImageField(upload_to='media/images/post_images/')
+	image = models.ImageField(upload_to='images/post_images/')
 	caption = models.CharField(max_length=255, blank=True, null=True)
 
 	created_at = models.DateTimeField(auto_now_add=True)
@@ -64,6 +65,8 @@ class PostImage(models.Model):
 
 
 class Comment(models.Model):
+	parent_comment = models.ForeignKey('Comment', related_name="child_comments", verbose_name="Parent Comment",
+	                                   on_delete=models.CASCADE, blank=True, null=True)
 	post = models.ForeignKey(Post,
 	                         on_delete=models.CASCADE,
 	                         related_name="comments", )

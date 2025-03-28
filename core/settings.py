@@ -32,6 +32,9 @@ AUTH_USER_MODEL = 'custom_auth.User'
 
 INSTALLED_APPS = [
 	'jazzmin',
+
+
+
 	'django.contrib.admin',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
@@ -39,7 +42,11 @@ INSTALLED_APPS = [
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
 
+
 	'rest_framework',
+	'rest_framework_simplejwt.token_blacklist',
+	'drf_spectacular',
+	'drf_spectacular_sidecar',  # Для статики Swagger UI
 
 	'account',
 	'blogs',
@@ -133,6 +140,21 @@ REST_FRAMEWORK = {
 	),
 	'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
 	'PAGE_SIZE': 10,
+	'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Family Project API',
+    'DESCRIPTION': 'API Endpoints for Family Project',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+	'SWAGGER_UI_DIST': 'SIDECAR',  # shorthand to use the sidecar instead
+	'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+	'REDOC_DIST': 'SIDECAR',
+	'SWAGGER_UI_SETTINGS': {
+		'persistAuthorization': True  # Keeps token after refresh
+	},
+
 }
 
 SIMPLE_JWT = {
@@ -160,3 +182,9 @@ SIMPLE_JWT = {
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATIC_ROOT = BASE_DIR / 'static'
+
+LOGIN_URL = '/admin/login/'
+LOGOUT_URL = '/admin/logout/'
+LOGIN_REDIRECT_URL = '/'

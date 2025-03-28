@@ -32,6 +32,9 @@ AUTH_USER_MODEL = 'custom_auth.User'
 
 INSTALLED_APPS = [
 	'jazzmin',
+
+
+
 	'django.contrib.admin',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
@@ -40,6 +43,8 @@ INSTALLED_APPS = [
 	'django.contrib.staticfiles',
 
 	'rest_framework',
+	'drf_yasg',
+
 
 	'account',
 	'blogs',
@@ -133,7 +138,9 @@ REST_FRAMEWORK = {
 	),
 	'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
 	'PAGE_SIZE': 10,
+	'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
+
 
 SIMPLE_JWT = {
 	'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
@@ -160,3 +167,4 @@ SIMPLE_JWT = {
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_ROOT = BASE_DIR / 'static'

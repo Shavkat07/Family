@@ -12,3 +12,4 @@ urlpatterns = [
     path('', include(router.urls)),  # Все `ViewSet` уже включены сюда
 ]
 
+

@@ -1,3 +1,5 @@
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 from rest_framework import serializers
 from .models import User
 from django.contrib.auth import authenticate
@@ -47,11 +49,20 @@ class CustomTokenObtainPairSerializer(serializers.Serializer):
             'user_data': CustomUserSerializer(user).data
         }
 
+class LogoutSerializer(serializers.Serializer):
+    refresh = serializers.CharField()
 
 
 class SetNewPasswordSerializer(serializers.Serializer):
     user_id = serializers.IntegerField()  # User ID or any identifier you use
-    new_password = serializers.CharField(write_only=True)
+    new_password = serializers.CharField(write_only=True, required=True)
+
+    def validate_new_password(self, value):
+        try:
+            validate_password(value)  # Проверка сложности пароля
+        except ValidationError as e:
+            raise serializers.ValidationError(e.messages)
+        return value
 
     def validate_user_id(self, value):
         try:
@@ -60,10 +71,24 @@ class SetNewPasswordSerializer(serializers.Serializer):
             raise serializers.ValidationError("User does not exist.")
         return value
 
-    def save(self):
-        user_id = self.validated_data['user_id']
+    def save(self, user):
+        # user_id = self.validated_data['user_id']
         new_password = self.validated_data['new_password']
 
-        user = User.objects.get(pk=user_id)
+        # user = User.objects.get(pk=user_id)
         user.set_password(new_password)
         user.save()
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(write_only=True, required=True)
+    new_password = serializers.CharField(write_only=True, required=True)
+
+    def validate_old_password(self, value):
+        user = self.context['request'].user
+        if not user.check_password(value):
+            raise serializers.ValidationError("Old password is incorrect.")
+        return value
+
+
+class ResetPasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField()

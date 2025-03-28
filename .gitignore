@@ -2,9 +2,15 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+.idea/
 # C extensions
 *.so
+
+
+
+account/migrations
+blogs/migrations
+custom_auth/migrations
 
 # Distribution / packaging
 .Python
@@ -172,3 +178,10 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+/.idea/Family.iml
+/.idea/misc.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/vcs.xml
+/blogs/migrations/
+/account/migrations/

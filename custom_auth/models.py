@@ -28,7 +28,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
 	first_name = models.CharField(max_length=255)
 	last_name = models.CharField(max_length=255)
-	email = models.EmailField(unique=True)
+	email = models.EmailField( verbose_name="Email", unique=True)
 
 	createdAt = models.DateTimeField(auto_now_add=True)
 	updatedAt = models.DateTimeField(auto_now=True)

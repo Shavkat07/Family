@@ -24,7 +24,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, Sp
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/v1/auth/", include("custom_auth.urls")),  # Аутентификация
-    path("api/v1/account/", include("account.urls")),   # Профиль, документы, здоровье
+    path("api/v1/profile/", include("profile.urls")),   # Профиль, документы, здоровье
     path("api/v1/blogs/", include("blogs.urls")),       # Блог
 
     # Swagger JSON

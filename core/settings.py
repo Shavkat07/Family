@@ -13,14 +13,24 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
+import environ
+import os
+
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+# Загружаем .env
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-yw)8y%(696b5az54o9se)ef*wj5_t*u!20x!1&cccelm!d^b#('
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -32,9 +42,7 @@ AUTH_USER_MODEL = 'custom_auth.User'
 
 INSTALLED_APPS = [
 	'jazzmin',
-
-
-
+	'django.contrib.sites',
 	'django.contrib.admin',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
@@ -42,19 +50,27 @@ INSTALLED_APPS = [
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
 
+	'allauth',
+	'allauth.account',
+	'allauth.socialaccount',  # Соцсети
 
 	'rest_framework',
+	'rest_framework_simplejwt',
+	'rest_framework.authtoken',
 	'rest_framework_simplejwt.token_blacklist',
 	'drf_spectacular',
 	'drf_spectacular_sidecar',  # Для статики Swagger UI
+	'dj_rest_auth',
+	'dj_rest_auth.registration',
 
-	'account',
+	'profile',
 	'blogs',
 	'custom_auth'
 
 ]
 
 MIDDLEWARE = [
+	"allauth.account.middleware.AccountMiddleware",
 	'django.middleware.security.SecurityMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
 	'django.middleware.common.CommonMiddleware',
@@ -143,11 +159,43 @@ REST_FRAMEWORK = {
 	'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
+REST_AUTH = {
+	'USE_JWT': True,
+	'JWT_AUTH_HTTPONLY': False,
+	'LOGIN_SERIALIZER': 'custom_auth.serializers.CustomLoginSerializer',
+	"REGISTER_SERIALIZER": "custom_auth.serializers.CustomRegisterSerializer",
+	'TOKEN_SERIALIZER': 'custom_auth.serializers.CustomTokenSerializer',
+}
+
+AUTHENTICATION_BACKENDS = (
+	'django.contrib.auth.backends.ModelBackend',  # Обычная аутентификация Django
+	'allauth.account.auth_backends.AuthenticationBackend',  # allauth
+)
+SITE_ID = 1
+
+# Email верификация
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+# ACCOUNT_LOGIN_METHODS = {'email'}
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+# ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
+ACCOUNT_USERNAME_REQUIRED = False
+# ACCOUNT_SIGNUP_FIELDS = {
+# 	# 'username': {'required': False},
+#     'email*': {'required': True},  # Email обязателен
+#     'password1*': {'required': True},  # Пароль обязателен
+#     'password2*': {'required': True},  # Подтверждение пароля
+# }
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Требует подтверждения email
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_UNIQUE_EMAIL = True
+
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Family Project API',
-    'DESCRIPTION': 'API Endpoints for Family Project',
-    'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': False,
+	'TITLE': 'Family Project API',
+	'DESCRIPTION': 'API Endpoints for Family Project',
+	'VERSION': '1.0.0',
+	'SERVE_INCLUDE_SCHEMA': False,
 	'SWAGGER_UI_DIST': 'SIDECAR',  # shorthand to use the sidecar instead
 	'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
 	'REDOC_DIST': 'SIDECAR',
@@ -157,10 +205,12 @@ SPECTACULAR_SETTINGS = {
 
 }
 
+REST_USE_JWT = True
+
 SIMPLE_JWT = {
 	'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
 	'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
-	'ROTATE_REFRESH_TOKENS': False,
+	'ROTATE_REFRESH_TOKENS': True,
 	'BLACKLIST_AFTER_ROTATION': True,
 	'ALGORITHM': 'HS256',
 	'SIGNING_KEY': SECRET_KEY,
@@ -172,7 +222,8 @@ SIMPLE_JWT = {
 	'USER_ID_FIELD': 'id',
 	'USER_ID_CLAIM': 'user_id',
 	'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
-	'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+	'AUTH_TOKEN_CLASSES': (
+	'rest_framework_simplejwt.tokens.AccessToken', 'rest_framework_simplejwt.tokens.RefreshToken',),
 	'TOKEN_TYPE_CLAIM': 'token_type',
 	'JTI_CLAIM': 'jti',
 	'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
@@ -188,3 +239,12 @@ STATIC_ROOT = BASE_DIR / 'static'
 LOGIN_URL = '/admin/login/'
 LOGOUT_URL = '/admin/logout/'
 LOGIN_REDIRECT_URL = '/'
+
+# Django SMTP
+EMAIL_BACKEND = env("EMAIL_BACKEND")
+EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD =env("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = env("EMAIL_PORT")
+EMAIL_USE_TLS = env("EMAIL_USE_TLS")
+EMAIL_USE_SSL = env("EMAIL_USE_SSL")

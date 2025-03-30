@@ -1,5 +1,5 @@
 from django.contrib import admin
-from account.models import Profile, Health, Document, DocumentCategory
+from profile.models import Profile, Health, Document, DocumentCategory
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user_username', 'user_first_name', 'user_type', 'user_is_superuser')

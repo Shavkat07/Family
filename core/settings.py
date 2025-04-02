@@ -53,6 +53,8 @@ INSTALLED_APPS = [
 	'allauth',
 	'allauth.account',
 	'allauth.socialaccount',  # Соцсети
+	'allauth.socialaccount.providers.google',  # Добавляем Google
+	'allauth.socialaccount.providers.facebook',  # Добавляем Facebook
 
 	'rest_framework',
 	'rest_framework_simplejwt',
@@ -192,6 +194,22 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Требует подтвержде�
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_UNIQUE_EMAIL = True
 
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+	    'EMAIL_AUTHENTICATION': True,
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'},
+    },
+    'facebook': {
+        'METHOD': 'oauth2',
+        'SCOPE': ['email', 'public_profile'],
+        'FIELDS': ['email', 'name'],
+    },
+}
+
+
+
+
 SPECTACULAR_SETTINGS = {
 	'TITLE': 'Family Project API',
 	'DESCRIPTION': 'API Endpoints for Family Project',
@@ -251,4 +269,5 @@ EMAIL_HOST_USER = env("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD =env("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = env("EMAIL_PORT")
 EMAIL_USE_TLS = env("EMAIL_USE_TLS")
-EMAIL_USE_SSL = env("EMAIL_USE_SSL")
+
+

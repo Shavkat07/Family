@@ -18,7 +18,7 @@ class Profile(models.Model):
 
 	phone = models.CharField(max_length=15, null=True, blank=False)
 	avatar = models.ImageField(upload_to='images/avatars/', null=True, blank=True)
-	bio = models.TextField(blank=True)
+	bio = models.TextField( null=True ,blank=True)
 
 	birthday = models.DateField(null=True, blank=True)
 	user_type = models.CharField(choices=USER_TYPE, max_length=100, default='user')

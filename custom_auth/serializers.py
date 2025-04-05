@@ -1,6 +1,8 @@
+import dns.resolver
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from dj_rest_auth.serializers import LoginSerializer
 from rest_framework import serializers
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import User
 
@@ -21,6 +23,20 @@ class CustomRegisterSerializer(RegisterSerializer):
 		"""Проверяем, есть ли уже такой email"""
 		if User.objects.filter(email=email).exists():
 			raise serializers.ValidationError("This email is already in use.")
+
+		# 🧠 Проверка на существование MX-записи домена
+		domain = email.split('@')[-1]
+		try:
+			dns.resolver.resolve(domain, 'MX')
+		except dns.resolver.NXDOMAIN:
+			raise serializers.ValidationError("Домен email не существует.")
+		except dns.resolver.NoAnswer:
+			raise serializers.ValidationError("У домена нет почтового сервера.")
+		except dns.exception.Timeout:
+			raise serializers.ValidationError("Проверка email заняла слишком много времени.")
+		except Exception:
+			raise serializers.ValidationError("Ошибка при проверке email.")
+
 		return email
 
 	def validate(self, attrs):
@@ -35,10 +51,6 @@ class CustomLoginSerializer(LoginSerializer):
 	def validate(self, attrs):
 		attrs['username'] = attrs.get('email')  # Чтобы обойти внутреннюю валидацию
 		return super().validate(attrs)
-
-
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework import serializers
 
 
 class CustomTokenSerializer(serializers.Serializer):

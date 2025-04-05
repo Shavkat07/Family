@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.decorators import action
+
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -8,22 +9,6 @@ from .models import Health, Profile, DocumentCategory, Document
 from .permissions import IsOwner
 from .serializer import ProfileSerializer, HealthSerializer, DocumentSerializer, DocumentCategorySerializer
 
-
-# class ProfileViewSet(viewsets.ModelViewSet):
-# 	queryset = Profile.objects.all()
-# 	serializer_class = ProfileSerializer
-# 	permission_classes = (IsAuthenticated)
-#
-# 	# Добавляем метод для получения профиля по user_id
-# 	@action(detail=False, methods=['get'], url_path='by-user/(?P<user_id>[^/.]+)')
-# 	def get_by_user_id(self, request, user_id=None):
-# 		try:
-# 			profile = self.queryset.get(user__id=user_id)
-# 			serializer = self.get_serializer(profile)
-# 			return Response(serializer.data)
-# 		except Profile.DoesNotExist:
-# 			return Response({"detail": "Profile not found."}, status=status.HTTP_404_NOT_FOUND)
-#
 
 class ProfileViewSet(viewsets.ModelViewSet):
 	queryset = Profile.objects.all()
@@ -100,15 +85,6 @@ class DocumentViewSet(viewsets.ModelViewSet):
 		# Удаляем только свой документ
 		instance = self.get_object()
 		return super().destroy(request, *args, **kwargs)
-
-# @action(detail=False, methods=['get'], url_path='by-user/(?P<user_id>[^/.]+)')
-# def get_by_user_id(self, request, user_id=None):
-# 	try:
-# 		documents = self.queryset.get(user__id=user_id)
-# 		serializer = self.get_serializer(documents)
-# 		return Response(serializer.data)
-# 	except Document.DoesNotExist:
-# 		return Response({"detail": "Documents not found."}, status=status.HTTP_404_NOT_FOUND)
 
 
 class DocumentCategoryViewSet(viewsets.ModelViewSet):

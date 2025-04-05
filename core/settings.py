@@ -35,7 +35,10 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["family1pro.pythonanywhere.com"]
+ALLOWED_HOSTS = [
+	"family1pro.pythonanywhere.com",
+    "127.0.0.1"
+    ]
 
 AUTH_USER_MODEL = 'custom_auth.User'
 # Application definition
@@ -147,11 +150,14 @@ USE_TZ = True
 
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Указываем фронтенд-сервер
+    "http://localhost:3000",
+	"https://family7.netlify.app" # Указываем фронтенд-сервер
 ]
 
 CORS_ALLOW_CREDENTIALS = True # Разрешаем куки и авторизационные заголовки
-CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
+CSRF_TRUSTED_ORIGINS = [
+	"http://localhost:3000",
+    "https://family7.netlify.app"]
 
 
 CORS_ALLOW_METHODS = [
@@ -162,9 +168,6 @@ CORS_ALLOW_METHODS = [
     'DELETE',
     'OPTIONS'
 ]
-
-
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
@@ -202,16 +205,10 @@ SITE_ID = 1
 
 # Email верификация
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-# ACCOUNT_LOGIN_METHODS = {'email'}
+
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-# ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
+
 ACCOUNT_USERNAME_REQUIRED = False
-# ACCOUNT_SIGNUP_FIELDS = {
-# 	# 'username': {'required': False},
-#     'email*': {'required': True},  # Email обязателен
-#     'password1*': {'required': True},  # Пароль обязателен
-#     'password2*': {'required': True},  # Подтверждение пароля
-# }
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Требует подтверждения email
@@ -230,8 +227,6 @@ SOCIALACCOUNT_PROVIDERS = {
         'FIELDS': ['email', 'name'],
     },
 }
-
-
 
 
 SPECTACULAR_SETTINGS = {
@@ -278,13 +273,9 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-
-
-
-
 LOGIN_URL = '/admin/login/'
 LOGOUT_URL = '/admin/logout/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/admin/'
 
 # Django SMTP
 EMAIL_BACKEND = env("EMAIL_BACKEND")

@@ -35,7 +35,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["family1pro.pythonanywhere.com"]
+ALLOWED_HOSTS = ["family1pro.pythonanywhere.com", "127.0.0.1"]
 
 AUTH_USER_MODEL = 'custom_auth.User'
 # Application definition
@@ -147,11 +147,14 @@ USE_TZ = True
 
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Указываем фронтенд-сервер
+    "http://localhost:3000",
+	"https://family7.netlify.app" # Указываем фронтенд-сервер
 ]
 
 CORS_ALLOW_CREDENTIALS = True # Разрешаем куки и авторизационные заголовки
-CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
+CSRF_TRUSTED_ORIGINS = [
+	"http://localhost:3000",
+    "https://family7.netlify.app"]
 
 
 CORS_ALLOW_METHODS = [
@@ -284,7 +287,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_URL = '/admin/login/'
 LOGOUT_URL = '/admin/logout/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/admin/'
 
 # Django SMTP
 EMAIL_BACKEND = env("EMAIL_BACKEND")

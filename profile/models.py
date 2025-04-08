@@ -57,7 +57,7 @@ class Document(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	name = models.CharField(max_length=100)
 	description = models.TextField(blank=True)
-	image = models.ImageField(upload_to='documents/', null=True, blank=True)
+	file = models.FileField(upload_to='documents/', null=True, blank=True)
 
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)

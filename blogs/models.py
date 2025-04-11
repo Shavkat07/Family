@@ -33,10 +33,13 @@ class Post(models.Model):
 
 	title = models.CharField(max_length=300,)
 	body = models.TextField()
+	you_tube_link = models.URLField(null=True, blank=True)
+
 
 	published_at = models.DateTimeField(default=timezone.now)
 	created_at = models.DateTimeField(auto_now_add=True )
 	updated_at = models.DateTimeField(auto_now=True)
+
 
 	status = models.CharField(max_length=10, choices=STATUS, default='DF')
 

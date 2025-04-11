@@ -186,3 +186,5 @@ cython_debug/
 /blogs/migrations/
 /profile/migrations/
 
+/media/
+/media/images

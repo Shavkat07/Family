@@ -33,7 +33,7 @@ class Post(models.Model):
 
 	title = models.CharField(max_length=300,)
 	body = models.TextField()
-	you_tube_link = models.URLField(null=True, blank=True)
+	youtube_link = models.URLField(null=True, blank=True)
 
 
 	published_at = models.DateTimeField(default=timezone.now)

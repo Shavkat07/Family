@@ -9,17 +9,17 @@ class UserAdmin(BaseUserAdmin):
 	model = User
 	form = UserChangeForm
 	add_form = UserCreationForm
-	ordering = ['-createdAt']
+	ordering = ['-created_at']
 	list_display = ('email', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_superuser')
 	list_filter = ('is_staff', 'is_superuser', 'is_active')
 	search_fields = ('email', 'first_name', 'last_name')
-	readonly_fields = ('createdAt', 'updatedAt')
+	readonly_fields = ('created_at', 'updated_at')
 
 	fieldsets = (
 		(None, {'fields': ('email', 'password')}),
 		('Personal info', {'fields': ('first_name', 'last_name',)}),
 		('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
-		('Important dates', {'fields': ('createdAt', 'updatedAt')}),
+		('Important dates', {'fields': ('created_at', 'updated_at')}),
 	)
 
 	add_fieldsets = (

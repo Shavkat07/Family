@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 from .models import Health, Profile, DocumentCategory, Document
 from .permissions import IsOwner
-from .serializer import ProfileSerializer, HealthSerializer, DocumentSerializer, DocumentCategorySerializer
+from .serializers import ProfileSerializer, HealthSerializer, DocumentSerializer, DocumentCategorySerializer
 
 
 class ProfileViewSet(viewsets.ModelViewSet):

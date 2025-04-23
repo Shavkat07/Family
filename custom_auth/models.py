@@ -30,8 +30,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 	last_name = models.CharField(max_length=255)
 	email = models.EmailField( verbose_name="Email", unique=True)
 
-	createdAt = models.DateTimeField(auto_now_add=True)
-	updatedAt = models.DateTimeField(auto_now=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
 
 	is_active = models.BooleanField(default=True)
 	is_staff = models.BooleanField(default=False)

@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .models import Post, PostImage, PostCategory, Comment
 from .permissions import IsAdminOrReadOnly
-from .serializer import PostSerializer, PostImageSerializer, PostCategorySerializer, CommentSerializer
+from .serializers import PostSerializer, PostImageSerializer, PostCategorySerializer, CommentSerializer
 
 
 # Create your views here.

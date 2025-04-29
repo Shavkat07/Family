@@ -41,8 +41,7 @@
 
 ## 📸 Swagger UI
 
-[Посмотреть Swagger UI](https://family1pro.pythonanywhere.com/api/schema/swagger-ui/)  
-![Swagger Screenshot](link_to_your_screenshot_here)
+[Посмотреть Swagger UI](https://family1pro.pythonanywhere.com/api/schema/docs)  
 
 ## 🏁 Быстрый старт
 

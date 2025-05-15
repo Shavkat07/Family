@@ -5,7 +5,7 @@ urlpatterns = [
 	# API аутентификации
 	path('', include('dj_rest_auth.urls')),
 	re_path(
-		"^registration/account-confirm-email/(?P<key>[-:\w]+)/$",
+		r"^registration/account-confirm-email/(?P<key>[-:\w]+)/$",
 		ConfirmEmailView.as_view(),
 		name="account_confirm_email",
 	),

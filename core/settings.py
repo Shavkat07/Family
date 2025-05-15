@@ -42,6 +42,7 @@ AUTH_USER_MODEL = 'custom_auth.User'
 # Application definition
 
 INSTALLED_APPS = [
+	'ckeditor',
 	'jazzmin',
 	'django.contrib.sites',
 	'django.contrib.admin',

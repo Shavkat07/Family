@@ -63,4 +63,4 @@ class Document(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
-		return f"{self.user.email}'s Document"
+		return f"User: {self.user.email} Document: {self.name} "
